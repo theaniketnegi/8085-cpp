@@ -1,0 +1,8 @@
+# ninja log v5
+2	156	7025624580688052	CMakeFiles/8085_cpp.dir/src/Arithmetic.cpp.obj	fc1f3141a05e710c
+18	158	7025624580728038	CMakeFiles/8085_cpp.dir/src/Load_and_Store.cpp.obj	3b5dae34c55d2581
+11	164	7025624580768023	CMakeFiles/8085_cpp.dir/src/Branching.cpp.obj	815af87d600b1d1c
+39	170	7025624580868025	CMakeFiles/8085_cpp.dir/src/Set.cpp.obj	40cbc7f11b9e9327
+25	172	7025624580848025	CMakeFiles/8085_cpp.dir/src/Logical.cpp.obj	9cb0267114990c4c
+3	652	7025631749346072	CMakeFiles/8085_cpp.dir/src/main.cpp.obj	b214ecdaa67f0e6d
+653	791	7025631750725849	8085_cpp.exe	f4060f4db6563681

@@ -9,4 +9,4 @@ add_executable(8085_cpp
         src/Load_and_Store.cpp
         src/Logical.cpp
         src/main.cpp
-        src/Set.cpp)
+        src/Set.cpp src/Utils/Validate.cpp src/Utils/Validate.h)
