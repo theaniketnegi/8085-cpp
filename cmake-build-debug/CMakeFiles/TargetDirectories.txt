@@ -1,0 +1,3 @@
+C:/Users/anike/Desktop/emulator/8085-cpp/cmake-build-debug/CMakeFiles/8085_cpp.dir
+C:/Users/anike/Desktop/emulator/8085-cpp/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/anike/Desktop/emulator/8085-cpp/cmake-build-debug/CMakeFiles/rebuild_cache.dir
