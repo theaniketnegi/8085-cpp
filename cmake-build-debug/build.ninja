@@ -85,11 +85,11 @@ build CMakeFiles/8085_cpp.dir/src/Set.cpp.obj: CXX_COMPILER__8085_cpp_Debug C$:/
   OBJECT_DIR = CMakeFiles\8085_cpp.dir
   OBJECT_FILE_DIR = CMakeFiles\8085_cpp.dir\src
 
-build CMakeFiles/8085_cpp.dir/src/Validate.cpp.obj: CXX_COMPILER__8085_cpp_Debug C$:/Users/anike/Desktop/emulator/8085-cpp/src/Validate.cpp || cmake_object_order_depends_target_8085_cpp
-  DEP_FILE = CMakeFiles\8085_cpp.dir\src\Validate.cpp.obj.d
+build CMakeFiles/8085_cpp.dir/src/Utils/Utils.cpp.obj: CXX_COMPILER__8085_cpp_Debug C$:/Users/anike/Desktop/emulator/8085-cpp/src/Utils/Utils.cpp || cmake_object_order_depends_target_8085_cpp
+  DEP_FILE = CMakeFiles\8085_cpp.dir\src\Utils\Utils.cpp.obj.d
   FLAGS = -g -fdiagnostics-color=always -std=gnu++14
   OBJECT_DIR = CMakeFiles\8085_cpp.dir
-  OBJECT_FILE_DIR = CMakeFiles\8085_cpp.dir\src
+  OBJECT_FILE_DIR = CMakeFiles\8085_cpp.dir\src\Utils
 
 
 # =============================================================================
@@ -99,7 +99,7 @@ build CMakeFiles/8085_cpp.dir/src/Validate.cpp.obj: CXX_COMPILER__8085_cpp_Debug
 #############################################
 # Link the executable 8085_cpp.exe
 
-build 8085_cpp.exe: CXX_EXECUTABLE_LINKER__8085_cpp_Debug CMakeFiles/8085_cpp.dir/src/Arithmetic.cpp.obj CMakeFiles/8085_cpp.dir/src/Branching.cpp.obj CMakeFiles/8085_cpp.dir/src/Load_and_Store.cpp.obj CMakeFiles/8085_cpp.dir/src/Logical.cpp.obj CMakeFiles/8085_cpp.dir/src/main.cpp.obj CMakeFiles/8085_cpp.dir/src/Set.cpp.obj CMakeFiles/8085_cpp.dir/src/Validate.cpp.obj
+build 8085_cpp.exe: CXX_EXECUTABLE_LINKER__8085_cpp_Debug CMakeFiles/8085_cpp.dir/src/Arithmetic.cpp.obj CMakeFiles/8085_cpp.dir/src/Branching.cpp.obj CMakeFiles/8085_cpp.dir/src/Load_and_Store.cpp.obj CMakeFiles/8085_cpp.dir/src/Logical.cpp.obj CMakeFiles/8085_cpp.dir/src/main.cpp.obj CMakeFiles/8085_cpp.dir/src/Set.cpp.obj CMakeFiles/8085_cpp.dir/src/Utils/Utils.cpp.obj
   FLAGS = -g
   LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\8085_cpp.dir
