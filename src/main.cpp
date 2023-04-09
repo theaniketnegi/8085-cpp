@@ -63,13 +63,12 @@ public:
             ADD("D", registers, flag, memory);
             SUI("FF", registers, flag);
 
-            registers['H'] = "20";
-            registers['L'] = "50";
-            memory["2050"] = "7F";
-            INR("M", registers, flag, memory);
-            registers['C'] = "0B";
+            registers['H'] = "FF";
+            registers['L'] = "FF";
+            registers['C'] = "01";
             DCR("C", registers, flag, memory);
 
+            DAD("H", registers, flag);
     }
 
     void display() {

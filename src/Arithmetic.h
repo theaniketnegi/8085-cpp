@@ -17,5 +17,11 @@ void SUI(string, map<char, string> &, vector<bool> &);
 
 void INR(string , map<char, string>& , vector<bool>& , map<string, string>& );
 
+void INX(string, map<char, string>&, vector<bool>&);
+
 void DCR(string , map<char, string>& , vector<bool>& , map<string, string>& );
+
+void DCX(string, map<char, string>&, vector<bool>&);
+
+void DAD(string, map<char, string>&, vector<bool>&);
 #endif //INC_8085_CPP_ARITHMETIC_H

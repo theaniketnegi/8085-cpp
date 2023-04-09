@@ -50,7 +50,7 @@ bool validateMemory(string &mem) {
     if (mem.length() != 4)
         return false;
     for (char &c: mem) {
-        if (!((c >= 'A' && c <= 'F') || (c >= '0' && c <= '9') || (c >= 'A' && c <= 'F')))
+        if (!((c >= '0' && c <= '9') || (c >= 'A' && c <= 'F')))
             return false;
     }
     return true;
@@ -61,6 +61,13 @@ bool validateRegister(string &mem) {
         return true;
     return false;
 }
+
+bool validRegisterPair(string &mem){
+    if(mem=="B" || mem=="D" || mem=="H")
+        return true;
+    return true;
+}
+
 
 bool validateMemRegister(string &mem) {
     return mem == "M";
@@ -76,8 +83,8 @@ bool validateImmediateData(string& data){
 
 void setFlags(vector<bool>& flag, string result){
     flag[6] = (result=="00");
-    int bin = to_int(result[0])*10 + to_int(result[1]);
-    bitset<8> bits(bin);
+    int hex = stoi(result, nullptr, 16);
+    bitset<8> bits(hex);
 
     if((bits.count()%2)==0)
         flag[2] = true;
@@ -109,6 +116,25 @@ string hexAdd(string regA, string regB, vector<bool>& flag) {
     return result;
 }
 
+string hexAdd16(string regA, string regB, vector<bool>& flag, bool isDAD) {
+    string result = "    ";
+    int carry = 0;
+    for (int i = 3; i >= 0; i--) {
+        int sum = to_int(regA[i]) + to_int(regB[i]) + carry;
+        if(sum>=16){
+            carry=1;
+            sum = sum - 16;
+        }
+        else{
+            carry=0;
+        }
+        flag[0] = carry==1 && isDAD;
+        result[i] = to_char(sum);
+    }
+
+    return result;
+}
+
 string twosComplement(string& data, vector<bool> flag){
     string result = "  ";
     string comp = "FF";
@@ -117,6 +143,17 @@ string twosComplement(string& data, vector<bool> flag){
         result[i] = to_char(diff);
     }
     result = hexAdd(result, "01", flag);
+    return result;
+}
+
+string twosComplement16(string data, vector<bool> flag){
+    string result = "    ";
+    string comp = "FFFF";
+    for(int i=data.length()-1; i>=0; i--) {
+        int diff = to_int(comp[i]) - to_int(data[i]);
+        result[i] = to_char(diff);
+    }
+    result = hexAdd16(result, "0001", flag, false);
     return result;
 }
 

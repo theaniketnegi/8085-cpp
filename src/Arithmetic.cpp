@@ -90,6 +90,8 @@ void INR(string reg, map<char, string>& registers, vector<bool>& flag, map<strin
                 string addressM = valueH+valueM;
                 if(validateMemory(addressM)){
                     memory[addressM] = hexAdd(memory[addressM], "01", flag);
+                    flag[0]=false;
+                    flag[4]=false;
                 }
                 else{
                     cout << "Invalid address" << endl;
@@ -98,6 +100,8 @@ void INR(string reg, map<char, string>& registers, vector<bool>& flag, map<strin
             }
             else{
                 registers[reg[0]] = hexAdd(registers[reg[0]], "01", flag);
+                flag[0]=false;
+                flag[4]=false;
             }
         }
         else{
@@ -111,6 +115,36 @@ void INR(string reg, map<char, string>& registers, vector<bool>& flag, map<strin
     }
 }
 
+void INX(string reg, map<char, string>& registers, vector<bool>& flag){
+    if(reg.length()==1){
+        if(validRegisterPair(reg)){
+            string valueA = registers[reg[0]];
+            char regPair;
+            if(reg=="B")
+                regPair = 'C';
+            else if(reg=="D")
+                regPair = 'E';
+            else
+                regPair = 'L';
+            string valueB = registers[regPair];
+            string result = valueA+valueB;
+            result = hexAdd16(result, "0001", flag, false);
+
+            registers[reg[0]] = string(1,result[0])+string(1,result[1]);
+            registers[regPair] = string(1, result[2])+string(1, result[3]);
+        }
+        else{
+            cout << "Invalid register pair" << endl;
+            exit(0);
+        }
+    }
+    else{
+        cout << "Invalid register";
+        exit(0);
+    }
+}
+
+
 void DCR(string reg, map<char, string>& registers, vector<bool>& flag, map<string, string>& memory){
     if(reg.length()==1){
         if(validateMemRegister(reg) || validateRegister(reg)){
@@ -120,6 +154,8 @@ void DCR(string reg, map<char, string>& registers, vector<bool>& flag, map<strin
                 string addressM = valueH+valueM;
                 if(validateMemory(addressM)){
                     memory[addressM] = hexSub(memory[addressM], "01", flag);
+                    flag[0]=false;
+                    flag[4]=false;
                 }
                 else{
                     cout << "Invalid address" << endl;
@@ -128,10 +164,72 @@ void DCR(string reg, map<char, string>& registers, vector<bool>& flag, map<strin
             }
             else{
                 registers[reg[0]] = hexSub(registers[reg[0]], "01", flag);
+                flag[0]=false;
+                flag[4]=false;
             }
         }
         else{
             cout << "Invalid register" << endl;
+            exit(0);
+        }
+    }
+    else{
+        cout << "Invalid register";
+        exit(0);
+    }
+}
+
+void DCX(string reg, map<char, string>& registers, vector<bool>& flag){
+    if(reg.length()==1){
+        if(validRegisterPair(reg)){
+            string valueA = registers[reg[0]];
+            char regPair;
+            if(reg=="B")
+                regPair = 'C';
+            else if(reg=="D")
+                regPair = 'E';
+            else
+                regPair = 'L';
+            string valueB = registers[regPair];
+            string result = valueA+valueB;
+            result = hexAdd16(result, twosComplement16("0001", flag), flag, false);
+
+            registers[reg[0]] = string(1,result[0])+string(1,result[1]);
+            registers[regPair] = string(1, result[2])+string(1, result[3]);
+        }
+        else{
+            cout << "Invalid register pair" << endl;
+            exit(0);
+        }
+    }
+    else{
+        cout << "Invalid register";
+        exit(0);
+    }
+}
+
+void DAD(string reg, map<char, string>& registers, vector<bool>& flag){
+    if(reg.length()==1){
+        if(validRegisterPair(reg)){
+            string valueA = registers[reg[0]];
+            char regPair;
+            if(reg=="B")
+                regPair = 'C';
+            else if(reg=="D")
+                regPair = 'E';
+            else
+                regPair = 'L';
+            string valueB = registers[regPair];
+            string result = valueA+valueB;
+
+            string HL = registers['H']+registers['L'];
+            result = hexAdd16(HL, result, flag, true);
+
+            registers['H'] = string(1,result[0])+string(1,result[1]);
+            registers['L'] = string(1, result[2])+string(1, result[3]);
+        }
+        else{
+            cout << "Invalid register pair" << endl;
             exit(0);
         }
     }
