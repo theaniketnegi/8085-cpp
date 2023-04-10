@@ -1,5 +1,6 @@
 #include "Essentials.h"
 #include "Arithmetic.h"
+#include "Logical.h"
 #include "Utils/Utils.h"
 
 class Emulator8085 {
@@ -55,20 +56,15 @@ public:
 //        registers['A'] = "FF";
 //        ADI("0F", registers, flag);
 
-            registers['A'] = "00";
-            registers['D'] = "FF";
-            //0000 0011
-            SUB("D", registers, flag, memory);
-            ADI("00", registers, flag);
-            ADD("D", registers, flag, memory);
-            SUI("FF", registers, flag);
-
-            registers['H'] = "FF";
-            registers['L'] = "FF";
-            registers['C'] = "01";
-            DCR("C", registers, flag, memory);
-
-            DAD("H", registers, flag);
+//            registers['A'] = "01";
+//            registers['D'] = "02";
+//            //0000 0011
+//            SUB("D", registers, flag, memory);
+            registers['A'] = "01";
+            registers['B'] = "01";
+            CMP("B", registers, flag, memory );
+            registers['A'] = "02";
+            CMP("B", registers, flag, memory);
     }
 
     void display() {

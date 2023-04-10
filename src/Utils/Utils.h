@@ -15,6 +15,8 @@ bool validateImmediateData(string&);
 void setFlags(vector<bool>&, string);
 string hexAdd(string, string, vector<bool>&);
 string hexAdd16(string, string, vector<bool>&, bool);
+string complement(string&);
+void compare(string, string, vector<bool>&);
 string twosComplement(string& , vector<bool> );
 string twosComplement16(string, vector<bool>);
 string hexSub(string, string, vector<bool>&);

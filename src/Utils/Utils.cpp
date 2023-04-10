@@ -135,13 +135,32 @@ string hexAdd16(string regA, string regB, vector<bool>& flag, bool isDAD) {
     return result;
 }
 
-string twosComplement(string& data, vector<bool> flag){
+string complement(string& data){
     string result = "  ";
     string comp = "FF";
     for(int i=data.length()-1; i>=0; i--) {
         int diff = to_int(comp[i]) - to_int(data[i]);
         result[i] = to_char(diff);
     }
+
+    return result;
+}
+
+void compare(string valA, string valB, vector<bool>& flag){
+    int numA = stoi(valA, 0, 16);
+    int numB = stoi(valB, 0, 16);
+    if(numA < numB) {
+        flag[0] = true;
+    } else if(numA==numB){
+        flag[6]=true;
+    }
+    else{
+        flag[0]=false;
+        flag[6]=false;
+    }
+}
+string twosComplement(string& data, vector<bool> flag){
+    string result = complement(data);
     result = hexAdd(result, "01", flag);
     return result;
 }
