@@ -20,4 +20,10 @@ void compare(string, string, vector<bool>&);
 string twosComplement(string& , vector<bool> );
 string twosComplement16(string, vector<bool>);
 string hexSub(string, string, vector<bool>&);
+bool instructionExists(string);
+bool validateLength(string, vector<string>);
+bool validateLine(string);
+string updatePC(string, map<string, string>&);
+void execute(string&, string&, map<string, string>&, vector<bool>&, map<char, string>&);
+void executionNoDebugger(string, string, map<string, string>&, vector<bool>&, map<char, string>&);
 #endif //INC_8085_CPP_UTILS_H
