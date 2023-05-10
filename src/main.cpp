@@ -194,6 +194,7 @@ public:
                 memory[pc]=in;
                 lastPC=pc;
                 pc = updatePC(pc, memory);
+                programList.push_back(pc);
             }
             else{
                 cout << in << endl;
@@ -201,6 +202,7 @@ public:
                 exit(1);
             }
         }
+        programList.pop_back();
         memory.erase(pc);
         pc=lastPC;
         executeDebugger(start, pc, memory, registers, flag, programList);

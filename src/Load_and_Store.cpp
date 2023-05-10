@@ -159,7 +159,7 @@ void STAX(string reg, map<char, string>& registers, map<string, string>& memory)
 
         string addr = registers[reg[0]] + registers[regPair];
         if(validateMemory(addr)){
-            registers['A'] = memory[addr];
+            memory[addr] = registers['A'];
         }
         else{
             cout << "Invalid address" << endl;
