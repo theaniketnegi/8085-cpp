@@ -17,7 +17,7 @@ void CMP(string reg, map<char, string>& registers, vector<bool>& flags, map<stri
                 }
                 else{
                     cout << "Invalid memory address" << endl;
-                    exit(0);
+                    exit(1);
                 }
             }
             else{
@@ -29,11 +29,11 @@ void CMP(string reg, map<char, string>& registers, vector<bool>& flags, map<stri
         }
         else{
             cout << "Invalid register" << endl;
-            exit(0);
+            exit(1);
         }
     }
     else{
         cout << "Invalid register";
-        exit(0);
+        exit(1);
     }
 }

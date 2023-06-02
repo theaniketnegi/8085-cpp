@@ -9,7 +9,7 @@ void MOV(string regA, string regB, map<char, string>& registers, map<string, str
             }
             else{
                 cout << "Invalid register";
-                exit(0);
+                exit(1);
             }
         }
         else if(regA!="M" && regB=="M"){
@@ -20,12 +20,12 @@ void MOV(string regA, string regB, map<char, string>& registers, map<string, str
                 }
                 else{
                     cout << "Invalid register";
-                    exit(0);
+                    exit(1);
                 }
             }
             else{
                 cout << "Invalid register";
-                exit(0);
+                exit(1);
             }
         }
         else if(regA=="M" && regB!="M"){
@@ -36,22 +36,22 @@ void MOV(string regA, string regB, map<char, string>& registers, map<string, str
                 }
                 else{
                     cout << "Invalid register";
-                    exit(0);
+                    exit(1);
                 }
             }
             else{
                 cout << "Invalid register";
-                exit(0);
+                exit(1);
             }
         }
         else{
             cout << "Invalid register";
-            exit(0);
+            exit(1);
         }
     }
     else{
         cout << "Invalid register";
-        exit(0);
+        exit(1);
     }
 }
 
@@ -64,7 +64,7 @@ void MVI(string regA, string data, map<char, string>& registers, map<string, str
             }
             else{
                 cout << "Invalid data" << endl;
-                exit(0);
+                exit(1);
             }
         }
         else if(validateRegister(regA)){
@@ -72,12 +72,12 @@ void MVI(string regA, string data, map<char, string>& registers, map<string, str
         }
         else{
             cout << "Invalid register" << endl;
-            exit(0);
+            exit(1);
         }
     }
     else{
         cout << "Invalid arguments" << endl;
-        exit(0);
+        exit(1);
     }
 }
 
@@ -97,7 +97,7 @@ void LXI(string regA, string data, map<char, string>& registers){
     }
     else{
         cout << "Invalid arguments" << endl;
-        exit(0);
+        exit(1);
     }
 }
 
@@ -107,7 +107,7 @@ void LDA(string addr, map<char, string>& registers, map<string, string>& memory)
     }
     else{
         cout << "Invalid address";
-        exit(0);
+        exit(1);
     }
 }
 
@@ -117,7 +117,7 @@ void STA(string addr, map<char, string>& registers, map<string, string>& memory)
     }
     else{
         cout << "Invalid address";
-        exit(0);
+        exit(1);
     }
 }
 
@@ -130,7 +130,7 @@ void LHLD(string addr, map<char, string>& registers, map<string, string>& memory
     }
     else{
         cout << "Invalid address";
-        exit(0);
+        exit(1);
     }
 }
 
@@ -143,7 +143,7 @@ void SHLD(string addr, map<char, string>& registers, map<string, string>& memory
     }
     else{
         cout << "Invalid address";
-        exit(0);
+        exit(1);
     }
 }
 
@@ -163,12 +163,12 @@ void STAX(string reg, map<char, string>& registers, map<string, string>& memory)
         }
         else{
             cout << "Invalid address" << endl;
-            exit(0);
+            exit(1);
         }
     }
     else{
         cout << "Invalid register pair" << endl;
-        exit(0);
+        exit(1);
     }
 }
 

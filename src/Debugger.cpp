@@ -84,7 +84,7 @@ void executeDebugger(string start, string end, map<string, string>& memory, map<
                 cout << "Exit? (Y/N): ";
                 cin >> in;
                 if(in == "Y" || in == "y"){
-                    exit(1);
+                    exit(0);
                 }
                 else if(in=="N" || in=="n"){
                     cin.ignore();

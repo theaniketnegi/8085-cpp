@@ -13,7 +13,7 @@ void ADD(string reg, map<char, string>& registers, vector<bool>& flag, map<strin
                 }
                 else{
                     cout << "Invalid address" << endl;
-                    exit(0);
+                    exit(1);
                 }
             }
             else{
@@ -22,19 +22,19 @@ void ADD(string reg, map<char, string>& registers, vector<bool>& flag, map<strin
         }
         else{
             cout << "Invalid register" << endl;
-            exit(0);
+            exit(1);
         }
     }
     else{
         cout << "Invalid register";
-        exit(0);
+        exit(1);
     }
 }
 
 void ADI(string data, map<char, string>& registers, vector<bool>& flag){
     if(data.length()!=2 || !validateImmediateData(data)){
         cout << "Invalid value";
-        exit(0);
+        exit(1);
     }
     else{
         registers['A'] = hexAdd(registers['A'], data, flag);
@@ -53,7 +53,7 @@ void SUB(string reg, map<char, string>& registers, vector<bool>& flag, map<strin
                 }
                 else{
                     cout << "Invalid address" << endl;
-                    exit(0);
+                    exit(1);
                 }
             }
             else{
@@ -62,19 +62,19 @@ void SUB(string reg, map<char, string>& registers, vector<bool>& flag, map<strin
         }
         else{
             cout << "Invalid register" << endl;
-            exit(0);
+            exit(1);
         }
     }
     else{
         cout << "Invalid register";
-        exit(0);
+        exit(1);
     }
 }
 
 void SUI(string data, map<char, string>& registers, vector<bool>& flag){
     if(data.length()!=2 || !validateImmediateData(data)){
         cout << "Invalid value";
-        exit(0);
+        exit(1);
     }
     else{
         registers['A'] = hexSub(registers['A'], data, flag);
@@ -95,7 +95,7 @@ void INR(string reg, map<char, string>& registers, vector<bool>& flag, map<strin
                 }
                 else{
                     cout << "Invalid address" << endl;
-                    exit(0);
+                    exit(1);
                 }
             }
             else{
@@ -106,12 +106,12 @@ void INR(string reg, map<char, string>& registers, vector<bool>& flag, map<strin
         }
         else{
             cout << "Invalid register" << endl;
-            exit(0);
+            exit(1);
         }
     }
     else{
         cout << "Invalid register";
-        exit(0);
+        exit(1);
     }
 }
 
@@ -135,12 +135,12 @@ void INX(string reg, map<char, string>& registers, vector<bool>& flag){
         }
         else{
             cout << "Invalid register pair" << endl;
-            exit(0);
+            exit(1);
         }
     }
     else{
         cout << "Invalid register";
-        exit(0);
+        exit(1);
     }
 }
 
@@ -159,7 +159,7 @@ void DCR(string reg, map<char, string>& registers, vector<bool>& flag, map<strin
                 }
                 else{
                     cout << "Invalid address" << endl;
-                    exit(0);
+                    exit(1);
                 }
             }
             else{
@@ -170,12 +170,12 @@ void DCR(string reg, map<char, string>& registers, vector<bool>& flag, map<strin
         }
         else{
             cout << "Invalid register" << endl;
-            exit(0);
+            exit(1);
         }
     }
     else{
         cout << "Invalid register";
-        exit(0);
+        exit(1);
     }
 }
 
@@ -199,12 +199,12 @@ void DCX(string reg, map<char, string>& registers, vector<bool>& flag){
         }
         else{
             cout << "Invalid register pair" << endl;
-            exit(0);
+            exit(1);
         }
     }
     else{
         cout << "Invalid register";
-        exit(0);
+        exit(1);
     }
 }
 
@@ -230,11 +230,11 @@ void DAD(string reg, map<char, string>& registers, vector<bool>& flag){
         }
         else{
             cout << "Invalid register pair" << endl;
-            exit(0);
+            exit(1);
         }
     }
     else{
         cout << "Invalid register";
-        exit(0);
+        exit(1);
     }
 }
