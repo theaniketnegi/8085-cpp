@@ -1,5 +1,5 @@
 # 8085-cpp
-An 8085 Emulator written in CPP
+An 8085 Simulator written in CPP
 
 ## Supported instruction set
 Arithmetic: ADD, ADI, SUB, INR, DCR, INX, DCX, DAD, SUI<br>
