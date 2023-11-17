@@ -245,7 +245,7 @@ int main(int argc, char *args[]) {
         cout << "Input the code" << endl; //User inputs code
         emu.userInput();
     } else if (argc == 2) {
-        if (!strcmpi(args[1], "--debugger")) {
+        if (!strcmp(args[1], "--debugger")) {
             cout << "Opening debugger" << endl;
             emu.userInputDebugger();
         } else {
@@ -253,7 +253,7 @@ int main(int argc, char *args[]) {
             emu.programFile(args[1]);
         }
     } else if (argc == 3) {
-        if (strcmpi(args[2], "--debugger")) {
+        if (strcmp(args[2], "--debugger")) {
             cout << "Invalid argument" << endl;
             exit(1);
         } else {
