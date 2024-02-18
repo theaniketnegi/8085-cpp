@@ -39,7 +39,10 @@ void ADD(string reg, map<char, string> &registers, vector<bool> &flag, map<strin
 
 void ADI(string data, map<char, string> &registers, vector<bool> &flag)
 {
-	registers['A'] = hexAdd(registers['A'], data, flag);
+	if (validateImmediateData(data) && data.length() == 2)
+		registers['A'] = hexAdd(registers['A'], data, flag);
+	else
+		throw invalid_argument("Invalid data");
 }
 
 void SUB(string reg, map<char, string> &registers, vector<bool> &flag, map<string, string> &memory)

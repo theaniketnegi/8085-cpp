@@ -23,7 +23,7 @@ protected:
 	}
 };
 
-TEST_F(ArithmeticTestFixture, Add_A_Register)
+TEST_F(ArithmeticTestFixture, ADD_REGISTER)
 {
 	registers['A'] = "03";
 	registers['D'] = "04";
@@ -31,7 +31,7 @@ TEST_F(ArithmeticTestFixture, Add_A_Register)
 	EXPECT_EQ(registers['A'], "07");
 }
 
-TEST_F(ArithmeticTestFixture, Add_a_Register_CY)
+TEST_F(ArithmeticTestFixture, ADD_REGISTER_CY)
 {
 	registers['A'] = "FF";
 	registers['D'] = "34";
@@ -40,7 +40,7 @@ TEST_F(ArithmeticTestFixture, Add_a_Register_CY)
 	EXPECT_EQ(flag[0], true);
 }
 
-TEST_F(ArithmeticTestFixture, Add_a_Register_AC)
+TEST_F(ArithmeticTestFixture, ADD_REGISTER_AC)
 {
 	registers['A'] = "08";
 	registers['D'] = "09";
@@ -49,7 +49,7 @@ TEST_F(ArithmeticTestFixture, Add_a_Register_AC)
 	EXPECT_EQ(flag[4], true);
 }
 
-TEST_F(ArithmeticTestFixture, Add_Memory)
+TEST_F(ArithmeticTestFixture, ADD_MEM)
 {
 	memory["2050"] = "04";
 	registers['A'] = "03";
@@ -58,7 +58,7 @@ TEST_F(ArithmeticTestFixture, Add_Memory)
 	ADD("M", registers, flag, memory);
 	EXPECT_EQ(registers['A'], "07");
 }
-TEST_F(ArithmeticTestFixture, Add_Memory_CY)
+TEST_F(ArithmeticTestFixture, ADD_MEM_CY)
 {
 	memory["2050"] = "34";
 	registers['A'] = "FF";
@@ -69,7 +69,7 @@ TEST_F(ArithmeticTestFixture, Add_Memory_CY)
 	EXPECT_EQ(flag[0], true);
 }
 
-TEST_F(ArithmeticTestFixture, Add_Memory_AC)
+TEST_F(ArithmeticTestFixture, ADD_MEM_AC)
 {
 	memory["2050"] = "09";
 	registers['A'] = "08";
@@ -80,17 +80,48 @@ TEST_F(ArithmeticTestFixture, Add_Memory_AC)
 	EXPECT_EQ(flag[4], true);
 }
 
-TEST_F(ArithmeticTestFixture, Add_Validation)
+TEST_F(ArithmeticTestFixture, ADD_VALIDATION)
 {
 	EXPECT_THROW(ADD("F", registers, flag, memory), invalid_argument);
 }
 
-TEST_F(ArithmeticTestFixture, Add_Validation_Memory)
+TEST_F(ArithmeticTestFixture, ADD_MEM_VALIDATION)
 {
 	registers['H']="GG";
 	registers['L']="DD";
 	EXPECT_THROW(ADD("M", registers, flag, memory), invalid_argument);
 }
+
+TEST_F(ArithmeticTestFixture, ADI){
+	registers['A']="04";
+	ADI("03", registers, flag);
+	EXPECT_EQ(registers['A'], "07");
+}
+
+TEST_F(ArithmeticTestFixture, ADI_CY){
+	registers['A']="FF";
+	ADI("34", registers, flag);
+	EXPECT_EQ(registers['A'], "33");
+	EXPECT_EQ(flag[0], true);
+}
+
+TEST_F(ArithmeticTestFixture, ADI_AC){
+	registers['A'] = "08";
+	ADI("09", registers, flag);
+	EXPECT_EQ(registers['A'], "11");
+	EXPECT_EQ(flag[4], true);
+}
+
+TEST_F(ArithmeticTestFixture, ADI_VALIDATION)
+{
+	EXPECT_THROW(ADI("G2", registers, flag), invalid_argument);
+}
+
+TEST_F(ArithmeticTestFixture, ADI_VALIDATION_LEN)
+{
+	EXPECT_THROW(ADI("123", registers, flag), invalid_argument);
+}
+
 
 int main(int argc, char *argv[])
 {
