@@ -5,7 +5,7 @@
 #ifndef INC_8085_CPP_UTILS_H
 #define INC_8085_CPP_UTILS_H
 
-#include "../Essentials.h"
+#include "../Headers/Essentials.h"
 
 bool validateMemory(string&);
 bool validateRegister(string&);

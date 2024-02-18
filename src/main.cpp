@@ -1,41 +1,35 @@
 #include <fstream>
-#include "Essentials.h"
 #include "Utils/Utils.h"
-#include "Debugger.h"
+#include "Headers/Debugger.h"
+#include "Headers/main.h"
 
-class Emulator8085 {
-    map<string, string> memory;
-    vector<bool> flag; // CY _ P _ AC _ Z S
-    map<char, string> registers; // A B C D E H L
-    string start;
-    string pc;
-    vector<string> programList;
-public:
-    Emulator8085() {
-        flag = vector<bool>(8, false);
-        registers = {{'A', "NULL"},
-                     {'B', "NULL"},
-                     {'C', "NULL"},
-                     {'D', "NULL"},
-                     {'E', "NULL"},
-                     {'H', "NULL"},
-                     {'L', "NULL"}};
-        start = "";
-        pc = "";
-    }
+Emulator8085::Emulator8085()
+{
+	flag = vector<bool>(8, false);
+	registers = {{'A', "NULL"},
+				 {'B', "NULL"},
+				 {'C', "NULL"},
+				 {'D', "NULL"},
+				 {'E', "NULL"},
+				 {'H', "NULL"},
+				 {'L', "NULL"}};
+	start = "";
+	pc = "";
+}
 
-    void init() {
-        cout << "Enter a starting address: ";
-        cin >> start;
+void Emulator8085::init()
+{
+	cout << "Enter a starting address: ";
+	cin >> start;
 
-        if (!validateMemory(start)) {
-            cout << "Invalid address." << endl;
-            exit(1);
-        }
-        pc = start;
-        programList.push_back(pc);
-    }
-
+	if (!validateMemory(start))
+	{
+		cout << "Invalid address." << endl;
+		exit(1);
+	}
+	pc = start;
+	programList.push_back(pc);
+}
 
 //    void dummyProcess() {
 ////        ADD INSTRUCTION CHECK - DONE
@@ -93,174 +87,242 @@ public:
 //            cout << validateLine("LXI H 2050") << endl;
 //    }
 
-    void userInput(){
-        string in;
-        cin.ignore();
-        cout << "Type '.' to exit" << endl;
-        cout << pc << " : ";
-        string lastPC;
-        while(true){
-            getline(cin, in);
-            if(validateLine(in)){
-                memory[pc]=in;
-                lastPC=pc;
-                pc = updatePC(pc, memory);
-                cout << pc << " : ";
-            }
-            else if(in=="."){
-                break;
-            }
-            else{
-                cout << in << endl;
-                cout << "Wrong instruction" << endl;
-                exit(1);
-            }
-        }
-        memory.erase(pc);
-        pc=lastPC;
-        executionNoDebugger(start, pc, memory, flag, registers);
-    }
+void Emulator8085::userInput()
+{
+	string in;
+	cin.ignore();
+	cout << "Type '.' to exit" << endl;
+	cout << pc << " : ";
+	string lastPC;
+	try
+	{
+		while (true)
+		{
+			getline(cin, in);
+			if (validateLine(in))
+			{
+				memory[pc] = in;
+				lastPC = pc;
+				pc = updatePC(pc, memory);
+				std::cout << pc << " : ";
+			}
+			else if (in == ".")
+			{
+				break;
+			}
+			else
+			{
+				std::cout << in << endl;
+				throw invalid_argument("Wrong instruction");
+			}
+		}
+		memory.erase(pc);
+		pc = lastPC;
+		executionNoDebugger(start, pc, memory, flag, registers);
+	}
+	catch (const invalid_argument &e)
+	{
+		std::cerr << e.what() << endl;
+	}
+}
 
-    void userInputDebugger(){
-        string in;
-        cin.ignore();
-        cout << "Type '.' to exit" << endl;
-        cout << pc << " : ";
-        string lastPC;
-        while(true){
-            getline(cin, in);
-            if(validateLine(in)){
-                memory[pc]=in;
-                lastPC=pc;
-                pc = updatePC(pc, memory);
-                cout << pc << " : ";
-                programList.push_back(pc);
-            }
-            else if(in=="."){
-                break;
-            }
-            else{
-                cout << in << endl;
-                cout << "Wrong instruction" << endl;
-                exit(1);
-            }
-        }
-        programList.pop_back();
-        memory.erase(pc);
-        pc=lastPC;
-        executeDebugger(start, pc, memory, registers, flag, programList);
-    }
+void Emulator8085::userInputDebugger()
+{
+	string in;
+	cin.ignore();
+	cout << "Type '.' to exit" << endl;
+	cout << pc << " : ";
+	string lastPC;
+	try
+	{
+		while (true)
+		{
+			getline(cin, in);
+			if (validateLine(in))
+			{
+				memory[pc] = in;
+				lastPC = pc;
+				pc = updatePC(pc, memory);
+				cout << pc << " : ";
+				programList.push_back(pc);
+			}
+			else if (in == ".")
+			{
+				break;
+			}
+			else
+			{
+				cout << in << endl;
+				throw invalid_argument("Wrong instruction");
+			}
+		}
+		programList.pop_back();
+		memory.erase(pc);
+		pc = lastPC;
+		executeDebugger(start, pc, memory, registers, flag, programList);
+	}
+	catch (const invalid_argument &e)
+	{
+		std::cerr << e.what() << endl;
+	}
+}
 
-    void programFile(string name){
-        string in;
-        ifstream file(name);
+void Emulator8085::programFile(string name)
+{
 
-        if(!file.is_open()) {
-            cout << "Error opening file." << endl;
-            exit(1);
-        }
-        string lastPC;
+	string in;
+	try
+	{
+		ifstream file(name);
 
-        while(getline(file, in)){
-            if(validateLine(in)){
-                memory[pc]=in;
-                lastPC=pc;
-                pc = updatePC(pc, memory);
-            }
-            else{
-                cout << in << endl;
-                cout << "Wrong instruction" << endl;
-                exit(1);
-            }
-        }
-        memory.erase(pc);
-        pc=lastPC;
-        executionNoDebugger(start, pc, memory, flag, registers);
-    }
+		if (!file.is_open())
+		{
+			throw runtime_error("Error opening file");
+		}
+		string lastPC;
 
-    void programFileDebugger(string name){
-        cin.ignore();
-        string in;
-        ifstream file(name);
+		while (getline(file, in))
+		{
+			if (validateLine(in))
+			{
+				memory[pc] = in;
+				lastPC = pc;
+				pc = updatePC(pc, memory);
+			}
+			else
+			{
+				cout << in << endl;
+				throw invalid_argument("Wrong instruction");
+			}
+		}
 
-        if(!file.is_open()) {
-            cout << "Error opening file." << endl;
-            exit(1);
-        }
-        string lastPC;
+		memory.erase(pc);
+		pc = lastPC;
+		executionNoDebugger(start, pc, memory, flag, registers);
+	}
+	catch (const invalid_argument &e)
+	{
+		std::cerr << e.what() << endl;
+	}
+	catch (const runtime_error &e)
+	{
+	std:
+		cerr << e.what() << endl;
+	}
+}
 
-        while(getline(file, in)){
-            if(validateLine(in)){
-                memory[pc]=in;
-                lastPC=pc;
-                pc = updatePC(pc, memory);
-                programList.push_back(pc);
-            }
-            else{
-                cout << in << endl;
-                cout << "Wrong instruction" << endl;
-                exit(1);
-            }
-        }
-        programList.pop_back();
-        memory.erase(pc);
-        pc=lastPC;
-        executeDebugger(start, pc, memory, registers, flag, programList);
-    }
+void Emulator8085::programFileDebugger(string name)
+{
+	cin.ignore();
+	string in;
 
-    void display() {
-        vector<string> flags = {"CY", "_", "P", "_", "AC", "_", "Z", "S"};
-        cout << endl;
-        cout << "FLAGS: " << endl;
-        for (int i = 0; i < static_cast<int>(flag.size()); i++) {
-            cout << flags[i] << " : ";
-            cout << flag[i] << endl;
-        }
-        cout << endl;
+	try
+	{
+		ifstream file(name);
 
-        cout << "USED MEMORY: " << endl;
-        for (auto it: memory) {
-            cout << it.first << " : " << it.second << endl;
-        }
-        cout << endl;
+		if (!file.is_open())
+		{
+			throw runtime_error("Error opening file");
+		}
+		string lastPC;
 
-        cout << "REGISTERS: " << endl;
-        for (auto it: registers) {
-            cout << it.first << " : " << it.second << endl;
-        }
+		while (getline(file, in))
+		{
+			if (validateLine(in))
+			{
+				memory[pc] = in;
+				lastPC = pc;
+				pc = updatePC(pc, memory);
+				programList.push_back(pc);
+			}
+			else
+			{
+				cout << in << endl;
+				throw invalid_argument("Wrong instruction");
+			}
+		}
+		programList.pop_back();
+		memory.erase(pc);
+		pc = lastPC;
+		executeDebugger(start, pc, memory, registers, flag, programList);
+	}
+	catch (const invalid_argument &e)
+	{
+		std::cerr << e.what() << endl;
+	}
+	catch (const runtime_error &e)
+	{
+		std:cerr << e.what() << endl;
+	}
+}
 
-    }
-};
+void Emulator8085::display()
+{
+	vector<string> flags = {"CY", "_", "P", "_", "AC", "_", "Z", "S"};
+	cout << endl;
+	cout << "FLAGS: " << endl;
+	for (int i = 0; i < static_cast<int>(flag.size()); i++)
+	{
+		cout << flags[i] << " : ";
+		cout << flag[i] << endl;
+	}
+	cout << endl;
 
-int main(int argc, char *args[]) {
-    Emulator8085 emu;
-    emu.init();
+	cout << "USED MEMORY: " << endl;
+	for (auto it : memory)
+	{
+		cout << it.first << " : " << it.second << endl;
+	}
+	cout << endl;
 
-//    string result;
-//    result = hexAdd("FF", "34", emu.flag);
-//    cout << result;
+	cout << "REGISTERS: " << endl;
+	for (auto it : registers)
+	{
+		cout << it.first << " : " << it.second << endl;
+	}
+}
 
-    cout << endl;
-    if (argc == 1) {
-        cout << "Input the code" << endl; //User inputs code
-        emu.userInput();
-    } else if (argc == 2) {
-        if (!strcmp(args[1], "--debugger")) {
-            cout << "Opening debugger" << endl;
-            emu.userInputDebugger();
-        } else {
-            cout << "Executing code from " << args[1] << endl;
-            emu.programFile(args[1]);
-        }
-    } else if (argc == 3) {
-        if (strcmp(args[2], "--debugger")) {
-            cout << "Invalid argument" << endl;
-            exit(1);
-        } else {
-            cout << "Opening debugger with program from " << args[1] << endl;
-            emu.programFileDebugger(args[1]);
-        }
-    }
+int main(int argc, char *args[])
+{
+	Emulator8085 emu;
+	emu.init();
 
-    emu.display();
+	//    string result;
+	//    result = hexAdd("FF", "34", emu.flag);
+	//    cout << result;
+
+	cout << endl;
+	if (argc == 1)
+	{
+		cout << "Input the code" << endl; // User inputs code
+		emu.userInput();
+	}
+	else if (argc == 2)
+	{
+		if (!strcmp(args[1], "--debugger"))
+		{
+			cout << "Opening debugger" << endl;
+			emu.userInputDebugger();
+		}
+		else
+		{
+			cout << "Executing code from " << args[1] << endl;
+			emu.programFile(args[1]);
+		}
+	}
+	else if (argc == 3)
+	{
+		if (strcmp(args[2], "--debugger"))
+		{
+			cout << "Invalid argument" << endl;
+			exit(1);
+		}
+		else
+		{
+			cout << "Opening debugger with program from " << args[1] << endl;
+			emu.programFileDebugger(args[1]);
+		}
+	}
+
+	emu.display();
 }

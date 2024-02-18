@@ -1,9 +1,9 @@
 #include <bitset>
-#include "../Essentials.h"
-#include "../Arithmetic.h"
-#include "../Load_and_Store.h"
-#include "../Logical.h"
-#include "../Branching.h"
+#include "../Headers/Essentials.h"
+#include "../Headers/Arithmetic.h"
+#include "../Headers/Load_and_Store.h"
+#include "../Headers/Logical.h"
+#include "../Headers/Branching.h"
 
 int to_int(char &num) {
     map<char, int> mp ={
